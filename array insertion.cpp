@@ -33,15 +33,15 @@ int main()
 	
 	printf("enter the position where you want to insert an element: ");
 	scanf("%d",&pos);
-	printf("enter element to insert: ");
-	scanf("%d",&ele);
 	
 	if(pos>n) {
 		printf("invalid input");
 	}
 	else {
+		printf("enter element to insert: ");
+	        scanf("%d",&ele);
 		n=n+1;
-	    realloc(a,n*sizeof(int));
+	        realloc(a,n*sizeof(int));
 		insert(a,n,ele,pos);
 		display(a,n);
 	}
