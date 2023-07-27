@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int insertion(int *a, int n)
+int insertion(int *a, int *n)
 {
 	int i,ele,pos;
 
@@ -10,53 +10,42 @@ int insertion(int *a, int n)
 	printf("enter element to insert: ");
 	scanf("%d",&ele);
 
-	if(pos>n) {
+	if(pos>*n) {
 		printf("invalid input");
 	}
 	else {
-		n=n+1;
-	    realloc(a,n*sizeof(int));
-	    for(i=n-1;i>=pos;i--) {
+		*n=*n+1;
+	    a = (int*)realloc(a,(*n)*sizeof(int));
+	    for(i=*n-1;i>=pos;i--) {
 		    a[i+1]=a[i];
         }
 	    a[pos]=ele;
     }
 }
 
-int display(int *a, int n, int c)
+int display(int *a, int *n)
 {
 	int i;
-	if(c==1) {
-        n=n+1;
-	    for(i=0;i<n;i++) {
-		   printf("%d\t",*(a+i));
-	    }
+	for(i=0;i<*n;i++) {
+        printf("%d\t",*(a+i));
 	}
-	else if(c==2) {
-	    for(i=0;i<n;i++) {
-		    printf("%d\t",*(a+i));
-	   }
-	}
-    else {
-        for(i=0;i<n;i++) {
-            printf("%d\t",*(a+i));
-        }
-	   }
 
 }
 
-int deletion(int *a, int n)
+int deletion(int *a, int *n)
 {
     int pos,i;
     printf("enter the position where you want to delete an element: ");
 	scanf("%d",&pos);
-	if(pos>=n) {
+	if(pos>=*n) {
         printf("invalid input");
 	}
 	else {
-        for(i=pos;i<n;i++) {
+        *n=*n-1;
+        for(i=pos;i<=*n;i++) {
             a[i]=a[i+1];
         }
+        a = (int*)realloc(a,(*n)*sizeof(int));
 	}
 }
 
@@ -83,14 +72,12 @@ int main()
 
         switch(ch)
         {
-            case 1: insertion(a,n);
-                    c=1;
+            case 1: insertion(a,&n);
                     break;
 
-            case 2: deletion(a,n);
-                    c=2;
+            case 2: deletion(a,&n);
                     break;
-            case 3: display(a,n,c);
+            case 3: display(a,&n);
                     break;
             case 4: exit(0);
             default: printf("invalid choice");
