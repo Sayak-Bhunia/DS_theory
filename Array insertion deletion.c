@@ -56,7 +56,7 @@ int main()
 	printf("enter the size of the array: ");
 	scanf("%d",&n);
 
-	int* a=(int)malloc(n*sizeof(int));
+	int* a=(int*)malloc(n*sizeof(int));
 
 	printf("enter the elements of the array: ");
 	for(i=0;i<n;i++) {
