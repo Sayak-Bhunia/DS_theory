@@ -31,6 +31,6 @@ int main()
     for(i=0;i<n;i++) {
         scanf("%d",(a+i));
     }
-    bubble_sort(a,n);
+    insertion_sort(a,n);
     display(a,n);
 }
