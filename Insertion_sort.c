@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int bubble_sort(int *a, int n) {
+int insertion_sort(int *a, int n) {
     int i,j,key;
     for(i=1;i<n;i++) {
         key = a[i];
