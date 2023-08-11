@@ -3,7 +3,7 @@
 
 typedef struct node
 {
-    int data;
+    int val;
     struct node *prev, *next;
 }node;
 
@@ -14,7 +14,7 @@ node* create()
     ptr = (node*)malloc(sizeof(node));
     printf("enter data: ");
     scanf("%d",&item);
-    ptr->data = item;
+    ptr->val = item;
     ptr->next = NULL;
     ptr->prev = NULL;
     return ptr;
@@ -59,7 +59,7 @@ void display(node **start)
     else {
         printf("\n");
         while(ptr!=NULL) {
-            printf("%d\t",ptr->data);
+            printf("%d\t",ptr->val);
             ptr = ptr->next;
         }
         printf("\n");
