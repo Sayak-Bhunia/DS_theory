@@ -3,7 +3,7 @@
 
 typedef struct node
 {
-    int data;
+    int val;
     struct node *next;
 }node;
 
@@ -14,7 +14,7 @@ node* create()
     ptr = (node*)malloc(sizeof(node));
     printf("enter data: ");
     scanf("%d",&item);
-    ptr->data = item;
+    ptr->val = item;
     ptr->next = NULL;
     return ptr;
 }
@@ -23,10 +23,10 @@ void insert_first(node **start)
 {
     node *temp;
     temp = create();
-    if(*start == NULL) *start = temp;
+    if((*start) == NULL) (*start) = temp;
     else {
         temp->next = (*start);
-        *start = temp;
+        (*start) = temp;
     }
 }
 
@@ -34,9 +34,9 @@ void insert_last(node **start)
 {
     node *ptr,*temp;
     temp = create();
-    if(*start == NULL) *start = ptr;
+    if((*start) == NULL) (*start) = ptr;
     else{
-        ptr = *start;
+        ptr = (*start);
         while(ptr->next!=NULL) {
             ptr = ptr->next;
         }
@@ -46,13 +46,13 @@ void insert_last(node **start)
 
 void display(node **start)
 {
-    node *ptr;
+    node *ptr,*temp;
     ptr = (*start);
-    if(*start == NULL) printf("no node present in the Linked List");
+    if((*start) == NULL) printf("no node present in the Linked List");
     else{
         printf("\n");
         while(ptr!=NULL) {
-            printf("%d ",ptr->data);
+            printf("%d ",ptr->val);
             ptr = ptr->next;
         }
         printf("\n");
@@ -65,7 +65,7 @@ void delete_first(node **start)
     if((*start) == NULL) printf("deletion is not possible");
     else{
         temp = (*start);
-        *start = (*start)->next;
+        (*start) = (*start)->next;
         free(temp);
     }
 }
