@@ -55,7 +55,12 @@ void insert_last(node **start)
 void delete_first(node **start)
 {
     node *ptr,*temp;
-    if((*start) == NULL) printf("DLL is empty");
+    if((*start) == NULL) printf("\nDLL is empty");
+    else if((*start)->next == NULL) {
+        temp = (*start);
+        (*start) = NULL;
+        free(temp);
+    }
     else {
         temp = (*start);
         (*start) = (*start)->next;
@@ -67,7 +72,12 @@ void delete_first(node **start)
 void delete_last(node **start)
 {
     node *ptr, *temp;
-    if((*start) == NULL) printf("DLL is empty");
+    if((*start) == NULL) printf("\nDLL is empty");
+    else if((*start)->next == NULL) {
+        temp = (*start);
+        (*start) = NULL;
+        free(temp);
+    }
     else {
         ptr = (*start);
         while(ptr->next!=NULL) {
