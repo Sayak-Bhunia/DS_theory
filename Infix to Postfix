@@ -1,0 +1,77 @@
+/*
+    Time Complexity : O(n)
+    Space Complexity : O(n)
+    
+    where n is the length of the expression. 
+*/  
+
+#include <iostream>
+#include <bits/stdc++.h>
+
+bool isOperator(char ch){
+    if(ch - 'a' >= 0 && ch - 'a' <= 25){
+        return true;
+    }
+    else if(ch - '0' >= 0 && ch - '0' <= 9){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+string infixToPostfix(string exp)
+{
+    string ans = "";
+    stack<char> s;
+
+    // Precedence of the operators 
+    unordered_map<char, int> m;
+
+    m['^'] = 3;
+    m['*'] = 2;
+    m['/'] = 2;
+    m['+'] = 1;
+    m['-'] = 1;
+    m['('] = 0;
+    m[')'] = 0;
+
+    for(int i = 0; i < exp.length(); i++)
+    {
+        if(isOperator(exp[i]))
+        {
+            ans += exp[i];
+        }
+        else if(exp[i] == ')')
+        {
+
+            // Remove till the last opening
+            while(s.top() != '(')
+            {
+                ans += s.top();
+                s.pop();
+            }
+            s.pop();
+        }
+        else if(exp[i] == '(')
+        {
+            s.push(exp[i]);
+        }
+        else{
+
+            // Remove lower m operators 
+            while(s.size() && m[s.top()] >= m[exp[i]]){
+                ans += s.top();
+                s.pop();
+            }
+            s.push(exp[i]);
+        }
+    }
+    while(s.size())
+    {
+        ans += s.top();
+        s.pop();
+    }
+    return ans;
+    
+}
