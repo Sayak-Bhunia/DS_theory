@@ -34,7 +34,7 @@ void insert_last(node **start)
 {
     node *ptr,*temp;
     temp = create();
-    if((*start) == NULL) (*start) = ptr;
+    if((*start) == NULL) (*start) = temp;
     else{
         ptr = (*start);
         while(ptr->next!=NULL) {
