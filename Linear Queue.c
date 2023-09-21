@@ -27,17 +27,12 @@ void enqueue(struct Queue *q)
 {
     int val;
     if(q->rear == q->size) printf("\nOVERFLOW\n");
-    else if(q->front == 0 && q->rear == 0) { //initial case/at first insertion.
-            q->front = q->rear = 1;
-            printf("ENTER ELEMENT TO INSERT: ");
-            scanf("%d",&val);
-            q->arr[q->rear] = val;
-    }
     else {
-        (q->rear)++;
-         printf("ENTER ELEMENT TO INSERT: ");
-         scanf("%d",&val);
-         q->arr[q->rear] = val;
+        if(q->front == 0 && q->rear == 0) q->front = q->rear = 1;
+        else (q->rear)++;
+        printf("ENTER ELEMENT TO INSERT: ");
+        scanf("%d",&val);
+        q->arr[q->rear] = val;
     }
 }
 
