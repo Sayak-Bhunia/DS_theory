@@ -28,8 +28,8 @@ void enqueue(struct Queue *q)
     int val;
     if(q->rear == q->size) printf("\nOVERFLOW\n");
     else {
-        if(q->front == 0 && q->rear == 0) q->front = q->rear = 1;
-        else (q->rear)++;
+        if(q->front == 0 && q->rear == 0) q->front = q->rear = 1; //initial case/first insertion
+        else (q->rear)++; //normal case
         printf("ENTER ELEMENT TO INSERT: ");
         scanf("%d",&val);
         q->arr[q->rear] = val;
@@ -42,7 +42,7 @@ void dequeue(struct Queue *q)
     else if((q->front) == (q->rear)) { //QUEUE contains only one element.
         q->front = q->rear = 0;
     }
-    else (q->front)++;
+    else (q->front)++; //normal case
 }
 
 void display(struct Queue *q)
