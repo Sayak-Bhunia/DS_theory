@@ -23,14 +23,22 @@ struct Queue create(int size)
     return q;
 };
 
-void enqueue(struct Queue *q,int val)
+void enqueue(struct Queue *q)
 {
+    int val;
     if(q->rear == q->size) printf("\nOVERFLOW\n");
     else if(q->front == 0 && q->rear == 0) { //initial case/at first insertion.
             q->front = q->rear = 1;
+            printf("ENTER ELEMENT TO INSERT: ");
+            scanf("%d",&val);
+            q->arr[q->rear] = val;
     }
-    else (q->rear)++;
-    q->arr[q->rear] = val;
+    else {
+        (q->rear)++;
+         printf("ENTER ELEMENT TO INSERT: ");
+         scanf("%d",&val);
+         q->arr[q->rear] = val;
+    }
 }
 
 void dequeue(struct Queue *q)
@@ -47,7 +55,7 @@ void display(struct Queue *q)
     int i;
     if((q->front) == 0) printf("\nQUEUE EMPTY!\n");
     else{
-        printf("QUEUE ELEMENTS:\n");
+        printf("\nQUEUE ELEMENTS:\n");
         for(i=q->front;i<=q->rear;i++) {
             printf("%d ",q->arr[i]);
         }
@@ -73,9 +81,8 @@ int main()
         scanf("%d", &ch);
 
         switch (ch) {
-        case 1: printf("ENTER ELEMENT TO INSERT: ");
-                scanf("%d",&val);
-                enqueue(&q,val);
+        case 1:
+                enqueue(&q);
                 break;
         case 2: dequeue(&q);
                 break;
