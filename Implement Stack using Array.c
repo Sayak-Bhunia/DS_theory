@@ -1,33 +1,54 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-void push(int *arr, int n, int *top)
+struct Stack {
+    int *arr;
+    int size;
+    int top;
+};
+
+struct Stack create(int size) {
+    struct Stack s;
+    s.size = size;
+    s.top = -1;
+    s.arr = (int *)malloc(sizeof(int) * size);
+    if (s.arr == NULL) {
+        printf("Memory allocation failed\n");
+        exit(1);
+    }
+    return s;
+}
+
+void push(struct Stack *s)
 {
     int val;
-    if((*top) == n-1) printf("\nOVERFLOW!\n");
+    if (s->top == s->size - 1)
+        printf("\nOVERFLOW!\n");
     else {
-        (*top)++;
+        (s->top)++;
         printf("Enter data to PUSH: \n");
-        scanf("%d",&val);
-        arr[(*top)] = val;
+        scanf("%d", &val);
+        s->arr[s->top] = val;
     }
 }
 
-void pop(int *arr, int n, int *top)
+void pop(struct Stack *s)
 {
-    if((*top) == -1) printf("\nUNDERFLOW!\n");
+    if (s->top == -1)
+        printf("\nUNDERFLOW!\n");
     else {
-        (*top)--;
+        (s->top)--;
     }
 }
 
-void display(int *arr, int *top)
+void display(struct Stack *s)
 {
     int i;
-    if((*top) == -1) printf("\nUNDERFLOW!\n");
+    if (s->top == -1)
+        printf("\nUNDERFLOW!\n");
     else {
-        for(i=(*top);i>=0;i--) {
-            printf("%d\n",arr[i]);
+        for (i = s->top; i >= 0; i--) {
+            printf("%d\n", s->arr[i]);
         }
     }
     printf("\n");
@@ -35,31 +56,40 @@ void display(int *arr, int *top)
 
 int main()
 {
-    int *arr,n,top,ch;
+    struct Stack s;
+    int ch;
     printf("Enter size of Stack: ");
-    scanf("%d",&n);
-    top = -1;
+    scanf("%d", &s.size);
 
-    arr = (int*)malloc(sizeof(int)*n);
-    while(1) {
+    s = create(s.size);
+
+    while (1) {
         printf("1->PUSH\n");
         printf("2->POP\n");
         printf("3->DISPLAY\n");
         printf("4->EXIT\n");
         printf("Enter your choice: ");
-        scanf("%d",&ch);
+        scanf("%d", &ch);
 
-        switch(ch) {
-            case 1: push(arr,n,&top);
-                    break;
-            case 2: pop(arr,n,&top);
-                    break;
-            case 3: display(arr,&top);
-                    break;
-            case 4: exit(0);
-                    break;
-            default: printf("INVALID CHOICE!");
+        switch (ch) {
+        case 1:
+            push(&s);
+            break;
+        case 2:
+            pop(&s);
+            break;
+        case 3:
+            display(&s);
+            break;
+        case 4:
+            free(s.arr);
+            exit(0);
+            break;
+        default:
+            printf("INVALID CHOICE!\n");
         }
     }
 
+    return 0;
 }
+
