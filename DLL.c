@@ -1,49 +1,46 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-typedef struct node
-{
+typedef struct node {
     int val;
-    struct node *prev,*next;
-}node;
+    struct node *prev, *next;
+} node;
 
-node *create()
-{
+node *create() {
     int item;
     node *ptr;
     ptr = (node*)malloc(sizeof(node));
-    printf("enter element: ");
-    scanf("%d",&item);
+    printf("Enter element: ");
+    scanf("%d", &item);
     ptr->val = item;
     ptr->prev = NULL;
     ptr->next = NULL;
     return ptr;
 }
 
-void insert_first(node **start)
-{
+void insert_first(node **start) {
     node *ptr, *temp;
     temp = create();
-    if((*start) == NULL) (*start) = temp;
-    else{
+    if((*start) == NULL) {
+        (*start) = temp;
+    } else {
         temp->next = (*start);
         (*start)->prev = temp;
         (*start) = temp;
     }
 }
 
-void insert_last(node **start)
-{
-    node *ptr,*temp;
+void insert_last(node **start) {
+    node *ptr, *temp;
     temp = create();
-    if((*start) == NULL) (*start) = temp;
-    else if((*start)->next == NULL) {
+    if((*start) == NULL) {
+        (*start) = temp;
+    } else if((*start)->next == NULL) {
         (*start)->next = temp;
         temp->prev = (*start);
-    }
-    else {
+    } else {
         ptr = (*start);
-        while(ptr->next!=NULL) {
+        while(ptr->next != NULL) {
             ptr = ptr->next;
         }
         ptr->next = temp;
@@ -52,16 +49,15 @@ void insert_last(node **start)
     }
 }
 
-void delete_first(node **start)
-{
-    node *ptr,*temp;
-    if((*start) == NULL) printf("\nDLL is empty");
-    else if((*start)->next == NULL) {
+void delete_first(node **start) {
+    node *temp;
+    if((*start) == NULL) {
+        printf("\nDLL is empty");
+    } else if((*start)->next == NULL) {
         temp = (*start);
         (*start) = NULL;
         free(temp);
-    }
-    else {
+    } else {
         temp = (*start);
         (*start) = (*start)->next;
         (*start)->prev = NULL;
@@ -69,43 +65,67 @@ void delete_first(node **start)
     }
 }
 
-void delete_last(node **start)
-{
+void delete_last(node **start) {
     node *ptr, *temp;
-    if((*start) == NULL) printf("\nDLL is empty");
-    else if((*start)->next == NULL) {
-        temp = (*start);
-        (*start) = NULL;
-        free(temp);
-    }
-    else {
-        ptr = (*start);
-        while(ptr->next!=NULL) {
-            ptr = ptr->next;
-        }
-        temp = ptr;
-        ptr->prev->next = NULL;
-        free(temp);
-    }
+        if((*start) == NULL) printf("\nDLL is empty"); 
+     else if((*start)->next == NULL) { 
+         temp = (*start); 
+         (*start) = NULL; 
+         free(temp); 
+     } 
+     else { 
+         ptr = (*start); 
+         while(ptr->next!=NULL) { 
+             ptr = ptr->next; 
+         } 
+         temp = ptr; 
+         ptr->prev->next = NULL; 
+         free(temp); 
+     }
 }
 
-void display(node **start)
-{
+void search_insert(node **start) {
+    int key;
+    printf("Enter the element to search for: ");
+    scanf("%d", &key);
+    
+    node *ptr, *temp;
+    temp = create();
+    ptr = (*start);
+
+    while (ptr != NULL) {
+        if (ptr->val == key) {
+            temp->prev = ptr;
+            temp->next = ptr->next;
+            if (ptr->next != NULL) {
+                ptr->next->prev = temp;
+            }
+            ptr->next = temp;
+            printf("Element %d inserted after %d\n", temp->val, key);
+            return;
+        }
+        ptr = ptr->next;
+    }
+
+    printf("Element not found in the list.\n");
+}
+
+void display(node **start) {
     node *ptr;
     ptr = (*start);
-    if((*start) == NULL) printf("DLL empty");
-    else {
+    if((*start) == NULL) {
+        printf("DLL empty");
+    } else {
         printf("\n");
-        while(ptr!=NULL) {
-            printf("%d\t",ptr->val);
+        while(ptr != NULL) {
+            printf("%d\t", ptr->val);
             ptr = ptr->next;
         }
         printf("\n");
     }
 }
 
-int main()
-{
+int main() {
     node *start = NULL;
     int ch;
     while(1) {
@@ -114,23 +134,34 @@ int main()
         printf("\npress 3 to display");
         printf("\npress 4 to delete first element");
         printf("\npress 5 to delete last element");
-        printf("\npress 6 to exit");
+        printf("\npress 6 to search and insert element after a specific value");
+        printf("\npress 7 to exit");
         printf("\nenter your choice:");
-        scanf("%d",&ch);
+        scanf("%d", &ch);
 
         switch(ch) {
-            case 1:insert_first(&start);
-                   break;
-            case 2:insert_last(&start);
-                   break;
-            case 3:display(&start);
-                   break;
-            case 4:delete_first(&start);
-                   break;
-            case 5:delete_last(&start);
-                   break;
-            case 6:exit(0);
-            default:printf("invalid choice");
+            case 1:
+                insert_first(&start);
+                break;
+            case 2:
+                insert_last(&start);
+                break;
+            case 3:
+                display(&start);
+                break;
+            case 4:
+                delete_first(&start);
+                break;
+            case 5:
+                delete_last(&start);
+                break;
+            case 6:
+                search_insert(&start);
+                break;
+            case 7:
+                exit(0);
+            default:
+                printf("invalid choice");
         }
     }
 }
