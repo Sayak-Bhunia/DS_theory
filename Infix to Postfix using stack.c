@@ -33,6 +33,10 @@ int main()
     int top = -1;
     arr = (char*)malloc(strlen(exp)*sizeof(char));
 
+    if((*e !='\0') && (*e == '+' || *e == '-' || *e == '*' || *e == '/' || *e == '^' || *e == '$')) {
+        printf("INVALID EXP");
+        exit(0);
+    }
     while((*e)!='\0') {
         if(isalnum(*e)) printf("%c ",*e);
         else if((*e) == '(') push(*e,arr,&top);
