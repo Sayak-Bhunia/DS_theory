@@ -17,7 +17,7 @@ TreeNode* createNode(int x) {
     return newNode;
 }
 
-struct TreeNode* insertLeft(TreeNode* root, int x)
+TreeNode* insertLeft(TreeNode* root, int x)
 {
     root->left = createNode(x);
     return root->left;
