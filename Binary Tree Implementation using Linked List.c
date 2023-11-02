@@ -55,7 +55,7 @@ int main()
     int parent, ch, n;
     printf("Enter root: ");
     scanf("%d", &parent);
-    struct TreeNode* root = createNode(parent);
+    TreeNode *root = createNode(parent);
     while (1) {
         printf("1->INSERT LEFT\n");
         printf("2->INSERT RIGHT\n");
