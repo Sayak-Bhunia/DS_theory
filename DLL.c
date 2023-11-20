@@ -35,10 +35,8 @@ void insert_last(node **start) {
     temp = create();
     if((*start) == NULL) {
         (*start) = temp;
-    } else if((*start)->next == NULL) {
-        (*start)->next = temp;
-        temp->prev = (*start);
-    } else {
+    }
+    else {
         ptr = (*start);
         while(ptr->next != NULL) {
             ptr = ptr->next;
