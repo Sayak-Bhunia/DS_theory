@@ -1,53 +1,55 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-typedef struct node
+typedef struct Queue
+{
+    int *arr;
+    int size;
+    int front;
+    int rear;
+}Queue;
+
+Queue create(int size)
+{
+    Queue q;
+    q.size = size;
+    q.front = 0;
+    q.rear = 0;
+    q.arr = (int*)malloc(sizeof(int)*size);
+    if(q.arr == NULL) {
+        printf("memory allocation failed!");
+        exit(1);
+    }
+    return q;
+}
+
+void enqueue(Queue *q)
 {
     int val;
-    struct node* next;
-}node;
-
-typedef struct queue
-{
-    node* front;
-    node* rear;
-}queue;
-
-queue q;
-
-void enqueue(int val)
-{
-    node* temp;
-    temp = (node*)malloc(sizeof(node));
-    temp->val = val;
-    temp->next = NULL;
-    if(q.front == NULL) q.front = q.rear = temp;
+    if((q->rear+1) % (q->size+1) == q->front) printf("overflow\n");
     else {
-        q.rear->next = temp;
-        q.rear = temp;
+        printf("enter element to insert: ");
+        scanf("%d",&val);
+        q->rear = (q->rear+1)%(q->size+1);
+        q->arr[q->rear] = val;
     }
 }
 
-void dequeue()
+void dequeue(Queue *q)
 {
-    if(q.front == NULL) printf("\nQUEUE EMPTY!\n");
-    else {
-        node* temp = q.front;
-        q.front = q.front->next;
-        printf("DELETED ELEMENT = %d\n",temp->val);
-        free(temp);
-    }
+    if(q->front == q->rear) printf("queue empty\n");
+    else q->front = (q->front+1)%(q->size+1);
 }
 
-void display()
+void display(Queue *q)
 {
-    node* curr = q.front;
-    if(curr == NULL) printf("\nQUEUE EMPTY!\n");
+    int i,n;
+    if(q->front == q->rear) printf("queue empty\n");
     else {
-        printf("\nQUEUE ELEMENTS:\n");
-        while(curr!=NULL) {
-            printf("%d ",curr->val);
-            curr = curr->next;
+        printf("Queue elements:\n");
+        n = (q->rear - q->front + (q->size+1))%(q->size+1);
+        for(i=1;i<=n;i++) {
+            printf("%d ",q->arr[(q->front+i)%(q->size+1)]);
         }
         printf("\n");
     }
@@ -55,26 +57,29 @@ void display()
 
 int main()
 {
-    q.front = q.rear = NULL;
+    Queue q;
     int ch,val;
+    printf("enter size: ");
+    scanf("%d",&q.size);
+    q = create(q.size);
     while(1) {
-        printf("1->INSERT\n");
-        printf("2->DELETE\n");
-        printf("3->DISPLAY\n");
-        printf("4->EXIT\n");
-        printf("ENTER CHOICE: ");
+        printf("1->insert\n");
+        printf("2->delete\n");
+        printf("3->display\n");
+        printf("4->exit");
+        printf("enter your choice: ");
         scanf("%d",&ch);
         switch(ch) {
-            case 1: printf("\nENTER VAL: ");
-                    scanf("%d",&val);
-                    enqueue(val);
+            case 1: enqueue(&q);
                     break;
-            case 2: dequeue();
+            case 2: dequeue(&q);
                     break;
-            case 3: display();
+            case 3: display(&q);
                     break;
-            case 4: exit(0);
-            default: printf("\nINVALID CHOICE!\n");
+            case 4: free(q.arr);
+                    exit(0);
+                    break;
+            default: printf("invalid choice\n");
         }
     }
 }
